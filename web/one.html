@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>登录页面</title>
+    <style>
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body{
+    background: linear-gradient(135deg, #1f2a40, #2c3e50, #1a2533);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    overflow: hidden;
+    font-family: "Microsoft Yahei",sans-serif;
+}
+.bg-circle{
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.08);
+    animation: float 8s infinite ease-in-out;
+}
+.circle1{
+    width:200px;
+    height:200px;
+    top:10%;
+    left:10%;
+    animation-delay:0s;
+}
+.circle2{
+    width:150px;
+    height:150px;
+    bottom:15%;
+    right:12%;
+    animation-delay:1.5s;
+}
+.circle3{
+    width:100px;
+    height:100px;
+    top:60%;
+    left:15%;
+    animation-delay:3s;
+}
+.circle4{
+    width:120px;
+    height:120px;
+    top:20%;
+    right:20%;
+    animation-delay:4.5s;
+}
+@keyframes float{
+    0%,100%{transform: translateY(0) rotate(0deg);}
+    50%{transform: translateY(-30px) rotate(10deg);}
+}
+.login-box{
+    background-color: rgba(255, 255, 255, 0.92);
+    width: 380px;
+    padding: 40px 35px;
+    border-radius: 16px;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+    animation: cardShow 1s;
+}
+@keyframes cardShow {
+    from{opacity:0;transform: translateY(40px);}
+    to{opacity:1;transform: translateY(0);}
+}
+.login-box h2{
+    text-align: center;
+    margin-bottom: 30px;
+    color: #2c3e50;
+    font-size:28px;
+    letter-spacing:2px;
+}
+.input-box{
+    margin-bottom: 22px;
+}
+.input-box label{
+    display: block;
+    margin-bottom: 8px;
+    color: #444;
+    font-size:15px;
+}
+.input-box input{
+    width:100%;
+    padding:13px 15px;
+    border: 1px solid #ccd1d9;
+    border-radius:8px;
+    font-size:16px;
+    transition: all 0.3s;
+    outline:none;
+}
+.input-box input:focus{
+    border-color:#007bff;
+    box-shadow: 0 0 0 3px rgba(0,123,255,0.15);
+}
+.remember{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    margin-bottom:24px;
+    color:#444;
+}
+.login-btn{
+    width:100%;
+    padding:14px;
+    background: linear-gradient(90deg,#007bff,#005ed8);
+    color:white;
+    border:none;
+    border-radius:8px;
+    font-size:17px;
+    cursor:pointer;
+    transition: 0.3s;
+    letter-spacing:1px;
+}
+.login-btn:hover{
+    background: linear-gradient(90deg,#005ed8,#004299);
+    transform: translateY(-2px);
+    box-shadow:0 6px 14px rgba(0,100,220,0.35);
+}
+.login-btn:active{
+    transform: translateY(0px);
+}
+.link{
+    display:flex;
+    justify-content:space-between;
+    margin-top:18px;
+}
+.link a{
+    text-decoration:none;
+    color:#007bff;
+    font-size:14px;
+    transition:0.2s;
+}
+.link a:hover{
+    color:#004299;
+    text-decoration: underline;
+}
+    </style>
+</head>
+<body>
+    <div class="bg-circle circle1"></div>
+    <div class="bg-circle circle2"></div>
+    <div class="bg-circle circle3"></div>
+    <div class="bg-circle circle4"></div>
+
+    <div class="login-box">
+        <h2>用户登录</h2>
+        <form id="loginForm">
+            <div class="input-box">
+                <label>用户名</label>
+                <input type="text" id="username" placeholder="请输入用户名" required>
+            </div>
+            <div class="input-box">
+                <label>密码</label>
+                <input type="password" id="password" placeholder="请输入密码" required>
+            </div>
+            <div class="remember">
+                <input type="checkbox" id="rem">
+                <label for="rem">记住我</label>
+            </div>
+            <button type="submit" class="login-btn">登录</button>
+            <div class="link">
+                <a href="#">忘记密码？</a>
+                <a href="#">注册账号</a>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        const form = document.getElementById('loginForm')
+        form.addEventListener('submit',async function(e){
+            e.preventDefault()
+            const username = document.getElementById('username').value
+            const password = document.getElementById('password').value
+            const res = await fetch("http://localhost:3000/api/login",{
+                method:"POST",
+                headers:{
+                    "Content-Type":"application/json"
+                },
+                body:JSON.stringify({username,password})
+            })
+            const data = await res.json()
+            alert(data.msg)
+        })
+        })
+    </script>
+</body>
+</html>
